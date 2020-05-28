@@ -9,7 +9,7 @@ from Model.Model import Model
 def main():
     app = QApplication(sys.argv)
     # Инициализация контроллера с заданием модели и представления
-    Controller(model=Model(), view=View())
+    contr=Controller(model=Model(), view=View())
     app.exec()
 
 

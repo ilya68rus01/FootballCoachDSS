@@ -5,24 +5,14 @@
 # Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
-import numpy as np
-import pandas as pd
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QGridLayout, QScrollArea, QVBoxLayout, QErrorMessage
-from PyQt5.QtWidgets import QDialog
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
-from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QFont
-from PyQt5.QtCore import Qt
-from PyQt5 import uic
 
 
 class Ui_MainWindow():
-
     def __init__(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1024, 768)
+        MainWindow.resize(863, 698)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.centralwidget)
