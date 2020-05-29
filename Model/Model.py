@@ -9,10 +9,14 @@ from keras.initializers import *
 
 class Model:
     def __init__(self):
-        self.Gk_model = Sequential()
-        self.def_model = Sequential()
-        self.mid_model = Sequential()
-        self.ak_model = Sequential()
+        self.ann_model = Sequential()
+        self.player_type = {
+            "attacker": "Resourses/ATT_model.h5",
+            "midfielder": "Resourses/MID_model.h5",
+            "defender": "Resourses/DEF_model.h5",
+            "goalkeeper": "Resourses/GK_model.h5",
+            '': None
+        }
 
     def load_data(self):
         dataset_gk = pd.read_csv("Resourses/GK.csv", delimiter=';')
@@ -30,34 +34,14 @@ class Model:
         self.X_ak = dataset_ak.loc[:, :'Tackle'].to_numpy()
         self.y_ak = dataset_ak.loc[:, 'Result'].to_numpy()
 
-    # def fit(self):
-    #     self.Gk_model.add(Dense(3, input_shape=(4,), activation=keras.activations.relu, kernel_initializer=lecun_normal()))
-    #     self.Gk_model.add(Dense(3, activation=softmax, kernel_initializer=lecun_normal()))
-    #     self.mid_model.add(Dense(4, input_shape=(13,), activation=softmax, kernel_initializer=lecun_normal()))
-    #     self.def_model.add(Dense(5, input_shape=(13,), activation=softmax, kernel_initializer=lecun_normal()))
-    #     self.ak_model.add(Dense(5, input_shape=(13,), activation=softmax, kernel_initializer=lecun_normal()))
-    #     self.Gk_model.compile(loss=losses.SparseCategoricalCrossentropy(), optimizer=optimizers.SGD(),
-    #                           metrics=['accuracy'])
-    #     self.info_gk = self.Gk_model.fit(self.X_gk, self.y_gk, epochs=10, validation_split=0.1)
-    #     self.mid_model.compile(loss=losses.SparseCategoricalCrossentropy(), optimizer=optimizers.SGD(),
-    #                            metrics=['accuracy'])
-    #     self.info_mid = self.mid_model.fit(self.X_mid, self.y_mid, epochs=10, validation_split=0.1)
-    #     self.def_model.compile(loss=losses.SparseCategoricalCrossentropy(), optimizer=optimizers.SGD(),
-    #                            metrics=['accuracy'])
-    #     self.info_def = self.def_model.fit(self.X_def, self.y_def, epochs=10, validation_split=0.1)
-    #     self.ak_model.compile(loss=losses.SparseCategoricalCrossentropy(), optimizer=optimizers.SGD(),
-    #                           metrics=['accuracy'])
-    #     self.info_ak = self.ak_model.fit(self.X_ak, self.y_ak, epochs=10, validation_split=0.1)
-    #     print(self.info_gk.history['accuracy'])
-    #     print(self.info_mid.history['accuracy'])
-    #     print(self.info_def.history['accuracy'])
-    #     print(self.info_ak.history['accuracy'])
-    #     self.Gk_model.save("Resourses/GK_model.h5")
-    #     self.mid_model.save("Resourses/MID_model.h5")
-    #     self.def_model.save("Resourses/Def_model.h5")
-    #     self.ak_model.save("Resourses/ATT_model.h5")
+    def load_models(self, player_type):
+        self.ann_model = keras.models.load_model(self.player_type[player_type])
+        print(np.shape(self.X_gk))
+        print(np.shape([0.79,0.58,0.77,0.47]))
+        print(np.shape(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]])))
+        self.ann_model.predict(self.X_gk)
 
-    def load_model(self):
-        self.Gk_model = keras.models.load_model("Resourses/GK_model.h5")
-        print(self.X_gk[25])
-        print(self.Gk_model.predict(self.X_gk))
+    def predict_train_schedudle(self, player_stats):
+        predict = self.ann_model.predict(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]]))
+        programm = predict.index(max(predict))
+        return programm

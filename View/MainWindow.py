@@ -103,6 +103,16 @@ class Ui_MainWindow():
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def get_player_type(self):
+        if(self.attacker_radio_button.isChecked()):
+            return "attacker"
+        if (self.defender_radio_button.isChecked()):
+            return "defender"
+        if (self.goalkeeper_radio_button.isChecked()):
+            return "goalkeeper"
+        if (self.midfielder_radio_button.isChecked()):
+            return "midfielder"
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
