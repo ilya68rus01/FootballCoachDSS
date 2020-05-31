@@ -14,13 +14,15 @@ class AddWidget(QWidget):
         self.scroll_area = QtWidgets.QScrollArea()
         self.horizontal_layout = QtWidgets.QHBoxLayout()
         self.group_box_layout = QtWidgets.QHBoxLayout()
+        self.match_counter = QtWidgets.QSpinBox()
+        self.match_counter_layout = QtWidgets.QHBoxLayout()
         self.goalkeeper_radio_button = QtWidgets.QRadioButton(self.groupBox)
         self.defender_radio_button = QtWidgets.QRadioButton(self.groupBox)
         self.midfielder_radio_button = QtWidgets.QRadioButton(self.groupBox)
         self.attacker_radio_button = QtWidgets.QRadioButton(self.groupBox)
         self.ok_button = QtWidgets.QPushButton()
         self.cancel_button = QtWidgets.QPushButton()
-        self.spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         self.goalkeeper_radio_button.clicked.connect(self.create_training_data_field)
         self.defender_radio_button.clicked.connect(self.create_training_data_field)
         self.midfielder_radio_button.clicked.connect(self.create_training_data_field)
@@ -34,7 +36,9 @@ class AddWidget(QWidget):
         self.defender_radio_button.setText("Defender")
         self.midfielder_radio_button.setText("Midlfielder")
         self.attacker_radio_button.setText("Attacker")
-        self.vertical_layout.addWidget(self.groupBox)
+        self.match_counter_layout.addWidget(self.match_counter)
+        self.match_counter_layout.addWidget(self.groupBox)
+        self.vertical_layout.addLayout(self.match_counter_layout)
         self.vertical_layout.addLayout(self.training_data_layout)
         self.vertical_layout.addLayout(self.horizontal_layout)
         self.groupBox.setLayout(self.group_box_layout)
@@ -56,12 +60,12 @@ class AddWidget(QWidget):
         scroll_layout = QtWidgets.QVBoxLayout()
         wgt1 = QWidget()
         if current_type == "goalkeeper":
-            for i in range(2):
+            for i in range(int(self.match_counter.text())):
                 wgt = TrainingDataWidget(player_type=current_type)
                 layer_list.append(wgt)
                 scroll_layout.addWidget(layer_list[i])
         if current_type != "goalkeeper":
-            for i in range(6):
+            for i in range(int(self.match_counter.text())):
                 wgt = TrainingDataWidget(player_type=current_type)
                 layer_list.append(wgt)
                 scroll_layout.addWidget(layer_list[i])
