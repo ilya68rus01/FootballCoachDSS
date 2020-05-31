@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from View.AddWindow import *
 
 
 class Ui_MainWindow():
@@ -98,10 +99,18 @@ class Ui_MainWindow():
         self.menubar.addAction(self.menuAdd.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         self.menubar.addAction(self.menuInfo.menuAction())
+        self.add_player = QtWidgets.QAction(MainWindow)
+        self.menuAdd.addAction(self.add_player)
+
+        self.add_window = AddWidget(i=0)
+        self.add_player.triggered.connect(self.show_add_window)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def show_add_window(self):
+        self.add_window.show()
 
     def get_player_type(self):
         if(self.attacker_radio_button.isChecked()):
@@ -117,7 +126,7 @@ class Ui_MainWindow():
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.data_player), _translate("MainWindow", "Данные игрока"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.training_schedudle), _translate("MainWindow", "График тренировок"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.training_schedudle), _translate("MainWindow", "Программа тренировок"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.progress_report), _translate("MainWindow", "Отчет о прогрессе"))
         self.groupBox.setTitle(_translate("MainWindow", "GroupBox"))
         self.goalkeeper_radio_button.setText(_translate("MainWindow", "Вратарь"))
@@ -130,3 +139,4 @@ class Ui_MainWindow():
         self.menuAdd.setTitle(_translate("MainWindow", "Add"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.menuInfo.setTitle(_translate("MainWindow", "Info"))
+        self.add_player.setText("Add player")
