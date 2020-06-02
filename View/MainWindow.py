@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from View.AddWindow import *
+import numpy as np
 
 
 class Ui_MainWindow():
@@ -104,7 +105,6 @@ class Ui_MainWindow():
 
         self.add_window = AddWidget(i=0)
         self.add_player.triggered.connect(self.show_add_window)
-
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -121,6 +121,85 @@ class Ui_MainWindow():
             return "goalkeeper"
         if (self.midfielder_radio_button.isChecked()):
             return "midfielder"
+
+    def create_indicator_table(self, name, data):
+        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(int(np.size(data))+1)
+        newItem = QtWidgets.QTableWidgetItem("Full name")
+        self.tableWidget.setItem(0, 0, newItem)
+        newItem = QtWidgets.QTableWidgetItem(str(name))
+        self.tableWidget.setItem(1, 0, newItem)
+        if int(np.size(data)) < 7:
+            newItem = QtWidgets.QTableWidgetItem("Hand play")
+            self.tableWidget.setItem(0, 1, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[0]))
+            self.tableWidget.setItem(1, 1, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Kicking play")
+            self.tableWidget.setItem(0, 2, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[1]))
+            self.tableWidget.setItem(1, 2, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Dives")
+            self.tableWidget.setItem(0, 3, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[2]))
+            self.tableWidget.setItem(1, 3, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Penalty")
+            self.tableWidget.setItem(0, 4, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[3]))
+            self.tableWidget.setItem(1, 4, newItem)
+        else:
+            newItem = QtWidgets.QTableWidgetItem("Speed")
+            self.tableWidget.setItem(0, 1, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[0]))
+            self.tableWidget.setItem(1, 1, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Completion")
+            self.tableWidget.setItem(0, 2, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[1]))
+            self.tableWidget.setItem(1, 2, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Penalty")
+            self.tableWidget.setItem(0, 3, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[2]))
+            self.tableWidget.setItem(1, 3, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Long_shots")
+            self.tableWidget.setItem(0, 4, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[3]))
+            self.tableWidget.setItem(1, 4, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Penalty_Acc")
+            self.tableWidget.setItem(0, 5, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[4]))
+            self.tableWidget.setItem(1, 5, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Awnings")
+            self.tableWidget.setItem(0, 6, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[5]))
+            self.tableWidget.setItem(1, 6, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Dribbling")
+            self.tableWidget.setItem(0, 7, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[6]))
+            self.tableWidget.setItem(1, 7, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Long_pass")
+            self.tableWidget.setItem(0, 8, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[7]))
+            self.tableWidget.setItem(1, 8, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Short_pass")
+            self.tableWidget.setItem(0, 9, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[8]))
+            self.tableWidget.setItem(1, 9, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Intercepts")
+            self.tableWidget.setItem(0, 10, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[9]))
+            self.tableWidget.setItem(1, 10, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Head_game")
+            self.tableWidget.setItem(0, 11, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[10]))
+            self.tableWidget.setItem(1, 11, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Selection")
+            self.tableWidget.setItem(0, 12, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[11]))
+            self.tableWidget.setItem(1, 12, newItem)
+            newItem = QtWidgets.QTableWidgetItem("Tackle")
+            self.tableWidget.setItem(0, 13, newItem)
+            newItem = QtWidgets.QTableWidgetItem(str(data[12]))
+            self.tableWidget.setItem(1, 13, newItem)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

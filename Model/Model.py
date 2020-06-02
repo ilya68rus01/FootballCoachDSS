@@ -5,10 +5,14 @@ from keras import *
 import pandas as pd
 from keras.activations import *
 from keras.initializers import *
+from Model.DataConverter import DataConverter
+from Model.Player import Player
 
 
 class Model:
     def __init__(self):
+        self.converter = DataConverter()
+        self.player = Player
         self.ann_model = Sequential()
         self.player_type = {
             "attacker": "Resourses/ATT_model.h5",
@@ -18,7 +22,7 @@ class Model:
             '': None
         }
 
-    def load_data(self):
+    def __load_data__(self):
         dataset_gk = pd.read_csv("Resourses/GK.csv", delimiter=';')
         dataset_def = pd.read_csv('Resourses/DEF.csv', delimiter=';')
         dataset_mid = pd.read_csv('Resourses/MID.csv', delimiter=';')
@@ -45,3 +49,13 @@ class Model:
         predict = self.ann_model.predict(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]]))
         programm = predict.index(max(predict))
         return programm
+
+    def set_data_player(self, player_type, name, params):
+        self.player = Player(
+            type=player_type,
+            full_name=name,
+            indicators=params
+        )
+
+    def convert_training_data(self, data):
+        return self.converter.convert(data)

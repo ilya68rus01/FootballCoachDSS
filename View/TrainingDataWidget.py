@@ -165,5 +165,27 @@ class TrainingDataWidget(QWidget):
         self.grid_layout.addWidget(self.tackle_all, 1, 24)
         self.grid_layout.addWidget(self.tackle_successfully, 1, 25)
 
+    def get_data_gk(self):
+        fields = list()
+        fields.append([self.hand_play_successfully.text(), self.hand_play_all.text()])
+        fields.append([self.kicking_play_successfully.text(), self.kicking_play_all.text()])
+        fields.append([self.dives_successfully.text(), self.dives_all.text()])
+        fields.append([self.penalty_successfully_gk.text(), self.penalty_all_gk.text()])
+        return fields
+
     def get_data(self):
-        pass
+        fields = list()
+        fields.append([self.speed_successfully.text(), self.speed_all.text()])
+        fields.append([self.completion_successfully.text(), self.completion_all.text()])
+        fields.append([self.penalty_successfully.text(), self.penalty_all.text()])
+        fields.append([self.long_shots_successfully.text(), self.long_shots_all.text()])
+        fields.append([self.penalty_acc_successfully.text(), self.penalty_acc_all.text()])
+        fields.append([self.awnings_successfully.text(), self.awnings_all .text()])
+        fields.append([self.dribbling_successfully.text(), self.dribbling_all.text()])
+        fields.append([self.long_pass_successfully.text(), self.long_pass_all.text()])
+        fields.append([self.short_pass_successfully.text(), self.short_pass_all.text()])
+        fields.append([self.intercepts_successfully.text(), self.intercepts_all.text()])
+        fields.append([self.head_game_successfully.text(), self.head_game_all.text()])
+        fields.append([self.selection_successfully.text(), self.selection_all.text()])
+        fields.append([self.tackle_successfully.text(), self.tackle_all.text()])
+        return fields
