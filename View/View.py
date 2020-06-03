@@ -23,6 +23,5 @@ class View(QtWidgets.QMainWindow):
         self.ui.create_indicator_table(name=name, data=indicators)
 
     def get_player_type(self):
-        print(self.ui.get_player_type())
         return self.ui.get_player_type()
 

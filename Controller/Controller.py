@@ -31,7 +31,6 @@ class Controller:
         training_data = self.view.get_training_data()
         self.view.ui.add_window.close()
         self.normalize_data = self.model.convert_training_data(data=training_data)
-        print(self.normalize_data)
         self.view.vizualize_indicators(name=self.normalize_data[0], indicators=self.normalize_data[1])
 
     def on_clear_button_click(self):
