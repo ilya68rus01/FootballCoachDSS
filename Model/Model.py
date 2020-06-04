@@ -7,6 +7,7 @@ from keras.activations import *
 from keras.initializers import *
 from Model.DataConverter import DataConverter
 from Model.Player import Player
+from Model.DbWorker import DbWorker
 
 
 class Model:
@@ -14,6 +15,7 @@ class Model:
         self.converter = DataConverter()
         self.player = Player
         self.ann_model = Sequential()
+        self.db_worker = DbWorker()
         self.player_type = {
             "attacker": "Resourses/ATT_model.h5",
             "midfielder": "Resourses/MID_model.h5",
@@ -48,8 +50,8 @@ class Model:
                 program = i + 1
         return program
 
-    def save_train_info(self):
-        pass
+    def save_player_in_db(self):
+        self.db_worker.save_player(self.player)
 
     def set_data_player(self, player_type, name, params, train_program):
         self.player = Player(
@@ -61,3 +63,6 @@ class Model:
 
     def convert_training_data(self, data):
         return self.converter.convert(data)
+
+    def get_player_from_db(self, name, ptype):
+        self.db_worker.get_player_history(name, ptype)
