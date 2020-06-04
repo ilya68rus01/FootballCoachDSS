@@ -22,10 +22,16 @@ class Controller:
         #self.model.load_models()
 
     def on_start_button_click(self):
-        #self.model.load_data()
-        self.model.load_models(self.view.get_player_type())
-        print(self.model.predict_train_schedudle(np.array([0.79, 0.58, 0.77, 0.47])))
-        #self.model.load_models()
+        player_type = self.view.get_player_type()
+        self.model.load_models(player_type)
+        player_stats = np.array([self.normalize_data[1]], dtype=np.float32)
+        train_programm_index = str(self.model.predict_train_schedudle(player_stats=player_stats))
+        self.view.vizualize_train_program(program=train_programm_index)
+        self.model.set_data_player(name=self.normalize_data[0],
+                                   params=self.normalize_data[1],
+                                   player_type=player_type,
+                                   train_program=train_programm_index)
+        self.model.save_train_info()
 
     def on_add_button_click(self):
         training_data = self.view.get_training_data()

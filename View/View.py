@@ -22,6 +22,9 @@ class View(QtWidgets.QMainWindow):
     def vizualize_indicators(self, name, indicators):
         self.ui.create_indicator_table(name=name, data=indicators)
 
+    def vizualize_train_program(self, program):
+        self.ui.write_train_program(data=program)
+
     def get_player_type(self):
         return self.ui.get_player_type()
 

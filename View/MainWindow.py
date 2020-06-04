@@ -200,6 +200,8 @@ class Ui_MainWindow():
             newItem = QtWidgets.QTableWidgetItem(str(data[12]))
             self.tableWidget.setItem(1, 13, newItem)
 
+    def write_train_program(self, data):
+        self.textEdit.setText(data)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

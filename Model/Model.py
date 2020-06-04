@@ -40,21 +40,23 @@ class Model:
 
     def load_models(self, player_type):
         self.ann_model = keras.models.load_model(self.player_type[player_type])
-        print(np.shape(self.X_gk))
-        print(np.shape([0.79,0.58,0.77,0.47]))
-        print(np.shape(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]])))
-        self.ann_model.predict(self.X_gk)
 
     def predict_train_schedudle(self, player_stats):
-        predict = self.ann_model.predict(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]]))
-        programm = predict.index(max(predict))
-        return programm
+        predict = self.ann_model.predict(player_stats)[0]
+        for i in range(int(np.size(predict))):
+            if predict[i] == max(predict):
+                program = i + 1
+        return program
 
-    def set_data_player(self, player_type, name, params):
+    def save_train_info(self):
+        pass
+
+    def set_data_player(self, player_type, name, params, train_program):
         self.player = Player(
-            type=player_type,
-            full_name=name,
-            indicators=params
+            type = player_type,
+            full_name = name,
+            indicators = params,
+            last_train = train_program
         )
 
     def convert_training_data(self, data):
