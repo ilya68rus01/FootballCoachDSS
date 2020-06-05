@@ -1,0 +1,60 @@
+CREATE DATABASE "FootballClub"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Russian_Russia.1251'
+    LC_CTYPE = 'Russian_Russia.1251'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+
+
+
+CREATE TABLE public.gk_info
+(
+    id integer NOT NULL DEFAULT nextval('"GK_info_id_seq"'::regclass),
+    kicking_play real NOT NULL,
+    hand_play real NOT NULL,
+    dives real NOT NULL,
+    penalty real NOT NULL,
+    training_program integer NOT NULL,
+    date date NOT NULL,
+    full_name character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT "GK_info_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.gk_info
+    OWNER to postgres;
+
+
+
+
+
+CREATE TABLE public.players_info
+(
+    id integer NOT NULL DEFAULT nextval('"Players_info_id_seq"'::regclass),
+    speed real NOT NULL,
+    completion real NOT NULL,
+    penalty real NOT NULL,
+    long_shots real NOT NULL,
+    penalty_acc real NOT NULL,
+    awnings real NOT NULL,
+    dribbling real NOT NULL,
+    long_pass real NOT NULL,
+    short_pass real NOT NULL,
+    intercepts real NOT NULL,
+    head_game real NOT NULL,
+    selection real NOT NULL,
+    tackle real NOT NULL,
+    training_program integer NOT NULL,
+    date date NOT NULL,
+    full_name character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT "Players_info_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.players_info
+    OWNER to postgres;
