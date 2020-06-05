@@ -7,6 +7,7 @@ from keras.activations import *
 from keras.initializers import *
 from Model.DataConverter import DataConverter
 from Model.Player import Player
+from Model.DbWorker import DbWorker
 
 
 class Model:
@@ -14,6 +15,7 @@ class Model:
         self.converter = DataConverter()
         self.player = Player
         self.ann_model = Sequential()
+        self.db_worker = DbWorker()
         self.player_type = {
             "attacker": "Resourses/ATT_model.h5",
             "midfielder": "Resourses/MID_model.h5",
@@ -40,22 +42,41 @@ class Model:
 
     def load_models(self, player_type):
         self.ann_model = keras.models.load_model(self.player_type[player_type])
-        print(np.shape(self.X_gk))
-        print(np.shape([0.79,0.58,0.77,0.47]))
-        print(np.shape(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]])))
-        self.ann_model.predict(self.X_gk)
 
     def predict_train_schedudle(self, player_stats):
-        predict = self.ann_model.predict(np.array([[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47],[0.79,0.58,0.77,0.47]]))
-        programm = predict.index(max(predict))
-        return programm
+        predict = self.ann_model.predict(player_stats)[0]
+        for i in range(int(np.size(predict))):
+            if predict[i] == max(predict):
+                program = i + 1
+        return program
 
-    def set_data_player(self, player_type, name, params):
+    def save_player_in_db(self):
+        self.db_worker.save_player(self.player)
+
+    def set_data_player(self, player_type, name, params, train_program):
         self.player = Player(
-            type=player_type,
-            full_name=name,
-            indicators=params
+            type = player_type,
+            full_name = name,
+            indicators = params,
+            last_train = train_program
         )
 
     def convert_training_data(self, data):
         return self.converter.convert(data)
+
+    def get_player_from_db(self, name, ptype):
+        info = self.db_worker.get_player_history(name, ptype)
+        data = list()
+        indicators_all = list()
+        name = None
+        for element in info:
+            name = str(element[0])
+            indicators = list()
+            for val in element[1]:
+                indicators.append(val)
+            indicators_all.append(indicators)
+        progress = np.array(indicators_all[int(np.shape(indicators_all)[0])-1]) - np.array(indicators_all[int(np.shape(indicators_all)[0])-2])
+        indicators_all.append(progress)
+        data.append(name)
+        data.append(indicators_all)
+        return data
