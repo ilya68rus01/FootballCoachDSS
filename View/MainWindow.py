@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from View.AddWindow import *
+from View import PlayerChoiceWindow
 import numpy as np
 
 
@@ -100,14 +101,22 @@ class Ui_MainWindow():
         self.menubar.addAction(self.menuAdd.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         self.menubar.addAction(self.menuInfo.menuAction())
+
         self.add_player = QtWidgets.QAction(MainWindow)
         self.menuAdd.addAction(self.add_player)
+        self.player_report = QtWidgets.QAction(MainWindow)
+        self.menuFile.addAction(self.player_report)
 
         self.add_window = AddWidget(i=0)
+        self.report_window = PlayerChoiceWindow.PlayerChoiceWindow()
         self.add_player.triggered.connect(self.show_add_window)
+        self.player_report.triggered.connect(self.show_report_window)
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def show_report_window(self):
+        self.report_window.show()
 
     def show_add_window(self):
         self.add_window.show()
@@ -200,6 +209,8 @@ class Ui_MainWindow():
             newItem = QtWidgets.QTableWidgetItem(str(data[12]))
             self.tableWidget.setItem(1, 13, newItem)
 
+    def write_train_program(self, data):
+        self.textEdit.setText(data)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -219,3 +230,24 @@ class Ui_MainWindow():
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.menuInfo.setTitle(_translate("MainWindow", "Info"))
         self.add_player.setText("Add player")
+        self.player_report.setText("Create report")
+
+    def draw_report(self, info):
+        table_widget_report = QtWidgets.QTableWidget()
+        name, indicators = info
+        row_count = int(np.shape(indicators)[0])
+        column_count = int(np.shape(indicators)[1])
+        table_widget_report.setRowCount(row_count)
+        table_widget_report.setColumnCount(column_count+1)
+        for i in range(row_count-1):
+            newItem = QtWidgets.QTableWidgetItem(name)
+            table_widget_report.setItem(i, 0, newItem)
+        newItem = QtWidgets.QTableWidgetItem("Progress")
+        table_widget_report.setItem(row_count-1, 0, newItem)
+        for i in range(row_count):
+            for j in range(column_count):
+                item = QtWidgets.QTableWidgetItem(str(indicators[i][j]))
+                table_widget_report.setItem(i, j+1, item)
+        layout = QtWidgets.QHBoxLayout()
+        layout.addWidget(table_widget_report)
+        self.progress_report.setLayout(layout)
