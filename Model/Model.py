@@ -65,4 +65,18 @@ class Model:
         return self.converter.convert(data)
 
     def get_player_from_db(self, name, ptype):
-        self.db_worker.get_player_history(name, ptype)
+        info = self.db_worker.get_player_history(name, ptype)
+        data = list()
+        indicators_all = list()
+        name = None
+        for element in info:
+            name = str(element[0])
+            indicators = list()
+            for val in element[1]:
+                indicators.append(val)
+            indicators_all.append(indicators)
+        progress = np.array(indicators_all[int(np.shape(indicators_all)[0])-1]) - np.array(indicators_all[int(np.shape(indicators_all)[0])-2])
+        indicators_all.append(progress)
+        data.append(name)
+        data.append(indicators_all)
+        return data

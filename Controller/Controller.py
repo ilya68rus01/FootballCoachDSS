@@ -18,8 +18,15 @@ class Controller:
         self.view.set_on_start_button_listener(lambda: self.on_start_button_click())
         self.view.set_on_clear_button_listener(lambda: self.on_clear_button_click())
         self.view.set_on_add_button_listener(lambda: self.on_add_button_click())
+        self.view.set_on_report_button_listener(lambda: self.on_report_button_click())
         self.normalize_data = list()
-        #self.model.load_models()
+
+    def on_report_button_click(self):
+        name, player_type = self.view.get_current_player_for_report()
+        player_info = self.model.get_player_from_db(name, player_type)
+        self.view.ui.report_window.close()
+        self.view.create_report(player_info)
+
 
     def on_start_button_click(self):
         player_type = self.view.get_player_type()

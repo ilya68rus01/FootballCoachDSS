@@ -16,6 +16,9 @@ class View(QtWidgets.QMainWindow):
     def set_on_add_button_listener(self, action):
         self.ui.add_window.ok_button.clicked.connect(action)
 
+    def set_on_report_button_listener(self, action):
+        self.ui.report_window.accept_button.clicked.connect(action)
+
     def get_training_data(self):
         return self.ui.add_window.get_fields()
 
@@ -27,4 +30,10 @@ class View(QtWidgets.QMainWindow):
 
     def get_player_type(self):
         return self.ui.get_player_type()
+
+    def get_current_player_for_report(self):
+        return [self.ui.report_window.player_list_box.currentText(), self.ui.report_window.get_player_type()]
+
+    def create_report(self, player_info):
+        self.ui.draw_report(player_info)
 
