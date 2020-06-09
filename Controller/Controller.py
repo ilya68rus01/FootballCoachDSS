@@ -38,8 +38,7 @@ class Controller:
                                    params=self.normalize_data[1],
                                    player_type=player_type,
                                    train_program=train_programm_index)
-        #self.model.save_player_in_db()
-        self.model.get_player_from_db('Ilya Khrushchev', 'goalkeeper')
+        self.model.save_player_in_db()
 
     def on_add_button_click(self):
         training_data = self.view.get_training_data()

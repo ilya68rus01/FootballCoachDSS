@@ -101,6 +101,7 @@ class Ui_MainWindow():
         self.menubar.addAction(self.menuAdd.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         self.menubar.addAction(self.menuInfo.menuAction())
+        self.table_widget_report = QtWidgets.QTableWidget()
 
         self.add_player = QtWidgets.QAction(MainWindow)
         self.menuAdd.addAction(self.add_player)
@@ -233,21 +234,27 @@ class Ui_MainWindow():
         self.player_report.setText("Create report")
 
     def draw_report(self, info):
-        table_widget_report = QtWidgets.QTableWidget()
+        print(info)
         name, indicators = info
         row_count = int(np.shape(indicators)[0])
         column_count = int(np.shape(indicators)[1])
-        table_widget_report.setRowCount(row_count)
-        table_widget_report.setColumnCount(column_count+1)
+        self.table_widget_report.setRowCount(row_count)
+        self.table_widget_report.setColumnCount(column_count+1)
+        if column_count > 5:
+            self.table_widget_report.setHorizontalHeaderLabels(["Full name","Speed","Completion","Penalty","Long shots",
+                                                                "Penalty Acc","Awnings","Dribbling","Long pass",
+                                                                "Short pass","Intercepts","Head game","Selection","Tackle","Train program"])
+        else:
+            self.table_widget_report.setHorizontalHeaderLabels(["Full name", "Hand play", "Kicking play", "Dives", "Penalty", "Training program"])
         for i in range(row_count-1):
             newItem = QtWidgets.QTableWidgetItem(name)
-            table_widget_report.setItem(i, 0, newItem)
+            self.table_widget_report.setItem(i, 0, newItem)
         newItem = QtWidgets.QTableWidgetItem("Progress")
-        table_widget_report.setItem(row_count-1, 0, newItem)
+        self.table_widget_report.setItem(row_count-1, 0, newItem)
         for i in range(row_count):
             for j in range(column_count):
                 item = QtWidgets.QTableWidgetItem(str(indicators[i][j]))
-                table_widget_report.setItem(i, j+1, item)
-        layout = QtWidgets.QHBoxLayout()
-        layout.addWidget(table_widget_report)
-        self.progress_report.setLayout(layout)
+                self.table_widget_report.setItem(i, j+1, item)
+        self.layout = QtWidgets.QHBoxLayout()
+        self.layout.addWidget(self.table_widget_report)
+        self.progress_report.setLayout(self.layout)

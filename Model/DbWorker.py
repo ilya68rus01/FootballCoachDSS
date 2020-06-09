@@ -45,6 +45,7 @@ class DbWorker:
             rows = self.cursor.fetchall()
             for row in rows:
                 player_info.append([row[0], [row[1], row[2], row[3], row[4], row[5]]])
+                print(player_info)
         else:
             self.cursor.execute("SELECT full_name, speed, completion, penalty, long_shots, penalty_acc, awnings, dribbling, long_pass, short_pass, intercepts, head_game, selection, tackle, training_program FROM players_info WHERE full_name='" + str(full_name) + "' order by date")
             rows = self.cursor.fetchall()
