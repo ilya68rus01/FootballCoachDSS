@@ -43,12 +43,20 @@ class Model:
     def load_models(self, player_type):
         self.ann_model = keras.models.load_model(self.player_type[player_type])
 
-    def predict_train_schedudle(self, player_stats):
+    def predict_train_schedudle(self, player_stats, player_type):
         predict = self.ann_model.predict(player_stats)[0]
+        program = None
         for i in range(int(np.size(predict))):
             if predict[i] == max(predict):
                 program = i + 1
-        return program
+        text_program = self.__get_program_text__(type=player_type, index=program)
+        return [program, text_program]
+
+    def __get_program_text__(self, type, index):
+        file = str(type) + "_program_" + str(index) + ".txt"
+        f = open('Resourses/Training program/'+str(file), 'r', encoding='utf-8')
+        text = str(f.read())
+        return text
 
     def save_player_in_db(self):
         self.db_worker.save_player(self.player)

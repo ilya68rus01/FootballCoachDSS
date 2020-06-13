@@ -32,12 +32,13 @@ class Controller:
         player_type = self.view.get_player_type()
         self.model.load_models(player_type)
         player_stats = np.array([self.normalize_data[1]], dtype=np.float32)
-        train_programm_index = str(self.model.predict_train_schedudle(player_stats=player_stats))
-        self.view.vizualize_train_program(program=train_programm_index)
+        train_program_index, train_program_text = self.model.predict_train_schedudle(player_stats=player_stats,
+                                                                                         player_type=player_type)
+        self.view.vizualize_train_program(program=train_program_text)
         self.model.set_data_player(name=self.normalize_data[0],
                                    params=self.normalize_data[1],
                                    player_type=player_type,
-                                   train_program=train_programm_index)
+                                   train_program=train_program_index)
         self.model.save_player_in_db()
 
     def on_add_button_click(self):
